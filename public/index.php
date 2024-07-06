@@ -1,4 +1,15 @@
 <?php
+require_once "../vendor/autoload.php";
+
+$Parsedown = new Parsedown();
+// safeModeをtrueにしておくとエスケープしてくれる。
+$Parsedown->setSafeMode(true);
+
+$md = <<<EOF
+# Sample Markdown
+EOF;
+
+$htmlContent = $Parsedown->text($md);
 
 ?>
 
@@ -13,7 +24,7 @@
 <body>
     <div class="container">
         <div class="editor-pane">
-            <div id="editor"></div>
+            <?php echo $md; ?>
         </div>
         <div class="preview-pane">
             <div class="preview-controls">
@@ -22,7 +33,9 @@
                 <button id="highlight-btn">Highlight: ON</button>
                 <button id="download-btn">Download</button>
             </div>
-            <div id="preview-content"></div>
+            <div id="preview-content">
+                <?php echo $htmlContent; ?>
+            </div>
         </div>
     </div>
     <script src="../node_modules/monaco-editor/min/vs/loader.js"></script>
